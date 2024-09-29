@@ -12,7 +12,7 @@ private:
     sf::RectangleShape dogOut;
 public:
     sf::Sprite dogSpr;
-    float factor = 0.f, speed = .01f;
+    float factor = 0.f, speed = .03f;
     Dog();
 
     void moveTowards(std::vector<sf::RectangleShape> placed);
