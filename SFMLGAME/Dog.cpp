@@ -38,6 +38,7 @@ void Dog::moveTowards(std::vector<sf::RectangleShape> placed)
 {
     sf::RectangleShape rect = (sf::RectangleShape)placed.back();
     sf::Vector2f pointB = rect.getPosition();
+    
     if (!dogcol.getGlobalBounds().intersects(rect.getGlobalBounds())) {
         // Move towards factor
         factor = speed;
