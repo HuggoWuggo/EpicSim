@@ -1,12 +1,2 @@
-﻿  main.cpp
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,60): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,60): warning C4244:         with
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,60): warning C4244:         [
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,60): warning C4244:             T=float
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,60): warning C4244:         ]
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,43): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,43): warning C4244:         with
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,43): warning C4244:         [
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,43): warning C4244:             T=float
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\main.cpp(29,43): warning C4244:         ]
+﻿  POC.cpp
   SFMLGAME.vcxproj -> C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\Debug\SFMLGAME.exe
