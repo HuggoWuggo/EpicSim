@@ -10,8 +10,13 @@ private:
     sf::Texture dogTex;
     sf::RectangleShape dogcol;
     sf::RectangleShape dogOut;
+    bool dead;
+
 public:
     sf::Sprite dogSpr;
+    int tileX;
+    int tileY;
+
     float factor = 0.f, speed = .03f;
     Dog();
 
@@ -20,4 +25,8 @@ public:
     void update();
 
     void render(sf::RenderWindow& window);
+
+    bool returnDeath() const;
+
+    void reset();
 };

@@ -1,7 +1,7 @@
 #include "Dog.h"
 
 
-sf::Vector2f Interpolate(const sf::Vector2<float>& pointA, const sf::Vector2<float>& pointB, float factor) {
+sf::Vector2f static Interpolate(const sf::Vector2<float>& pointA, const sf::Vector2<float>& pointB, float factor) {
     if (factor > 1.f)
         factor = 1.f;
 
@@ -17,7 +17,7 @@ Dog::Dog() {
     dogTex.setRepeated(false);
 
     // Init Sprite
-    dogSpr.setPosition(600, 20);
+    dogSpr.setPosition(0, 0);
     dogSpr.setScale(3, 3);
     dogSpr.setTexture(dogTex);
 
@@ -40,18 +40,25 @@ void Dog::moveTowards(std::vector<sf::RectangleShape> placed)
     sf::Vector2f pointB = rect.getPosition();
     
     if (!dogcol.getGlobalBounds().intersects(rect.getGlobalBounds())) {
+
         // Move towards factor
         factor = speed;
         dogSpr.setPosition(Interpolate(dogSpr.getPosition(), sf::Vector2f(pointB.x - 40, pointB.y - 40), factor));
+        //std::cout << "Tile X is: " <<  tileX << " " << "Tile Y is: " <<  tileY<< std::endl;
+        dead = false;
+       
     }
     else {
-        std::cout << "Hello World" << std::endl;
+        dead = true;
     }
 }
 
 void Dog::update() {
     dogOut.setPosition(dogSpr.getPosition().x, dogSpr.getPosition().y);
     dogcol.setPosition(dogSpr.getPosition().x + 8, dogSpr.getPosition().y + 35);
+
+    this->tileX = std::round(dogSpr.getPosition().x / 64);
+    this->tileY = std::round(dogSpr.getPosition().y / 64);
 }
 
 void Dog::render(sf::RenderWindow& window)
@@ -59,4 +66,15 @@ void Dog::render(sf::RenderWindow& window)
     window.draw(dogSpr);
     window.draw(dogOut);
     window.draw(dogcol);
+}
+
+bool Dog::returnDeath() const
+{
+    return dead;
+}
+
+void Dog::reset()
+{
+    dogSpr.setPosition(0, 0);
+    std::cout << "TODO RESET" << std::endl;
 }

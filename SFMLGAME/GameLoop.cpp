@@ -1,18 +1,135 @@
 #include "GameLoop.h"
 
+bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height)
+{
+
+    // load the tileset texture
+    if (!m_tileset.loadFromFile(tileset))
+        return false;
+
+    // resize the vertex array to fit the level size
+    m_vertices.setPrimitiveType(sf::Quads);
+    m_vertices.resize(width * height * 4);
+
+    // populate the vertex array, with one quad per tile
+    for (unsigned int i = 0; i < width; ++i)
+        for (unsigned int j = 0; j < height; ++j)
+        {
+            // get the current tile number
+            int tileNumber = tiles[i + j * width];
+
+            // find its position in the tileset texture
+            int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
+            int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
+
+            // get a pointer to the current tile's quad
+            sf::Vertex* quad = &m_vertices[(i + j * width) * 4];
+
+            // define its 4 corners
+            quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
+            quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
+            quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
+            quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
+
+            // define its 4 texture coordinates
+            quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
+            quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
+            quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
+            quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+        }
+    return true;
+}
+
+void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    // apply the transform
+    states.transform *= getTransform();
+
+    // apply the tileset texture
+    states.texture = &m_tileset;
+
+    // draw the vertex array
+    target.draw(m_vertices, states);
+}
+
+// create the window
+//sf::RenderWindow window(sf::VideoMode(512, 256), "Tilemap");
+
+// define the level with an array of tile indices
+//const int level[] =
+//{
+//    0, 1, 2, 3, 1, 2, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1,
+//    0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+//    1, 1, 0, 0, 2, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+//    0, 1, 0, 0, 3, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0,
+//    0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+//    0, 0, 1, 0, 3, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+//    1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+//    0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
+//};
+
+// create the tilemap from the level definition
+//TileMap map;
+//if (!map.load("Fonts/tileset_s.png", sf::Vector2u(32, 32), level, 16, 8))
+//    return -1;
+
+//Code
+
+//window.draw(map);
+
+
 GameLoop::GameLoop()
 {
+    numPlaced = 0;
+    cLevel = 1;
+    won = false;
+
     // Init window and events
-    this->window = new sf::RenderWindow(sf::VideoMode(800, 600), "It Works!", sf::Style::Titlebar | sf::Style::Close);
+    this->window = new sf::RenderWindow(sf::VideoMode(832, 640), "It Works!", sf::Style::Titlebar | sf::Style::Close);
     this->window->setFramerateLimit(60);
 
+    //Load grass texture
     if (!grass.loadFromFile("Resources/Textures/grass.png"))
         std::cout << "Couldn't load texture: GRASS" << std::endl;
     grass.setRepeated(true);
 
     BKG.setTexture(grass);
     BKG.setScale(1.5, 1.5);
-    BKG.setTextureRect(sf::IntRect(0, 0, 800, 600));
+    BKG.setTextureRect(sf::IntRect(0, 0, 832, 640));
+
+    map = new TileMap();
+
+    // load level
+
+    chooseLevel(cLevel);
+
+    // Load font
+    if (!font.loadFromFile("Resources/Fonts/BigBlueTerm.ttf"))
+        std::cout << "FAILED TO LOAD FONT: BIGBLUETERM" << std::endl;
+
+    // Init text
+    gameOver_t.setFont(font);
+    gameOver_t.setCharacterSize(64);
+    gameOver_t.setFillColor(sf::Color::Red);
+    gameOver_t.setOutlineColor(sf::Color(128, 0, 0, 255));
+    gameOver_t.setOutlineThickness(4);
+    gameOver_t.setPosition(sf::Vector2f(230, 220));
+    gameOver_t.setString("GAME OVER");
+
+    youWin_t.setFont(font);
+    youWin_t.setCharacterSize(64);
+    youWin_t.setFillColor(sf::Color(0, 255, 1, 255));
+    youWin_t.setOutlineColor(sf::Color(0, 128, 0, 255));
+    youWin_t.setOutlineThickness(4);
+    youWin_t.setPosition(sf::Vector2f(230, 220));
+    youWin_t.setString("YOU WIN!");
+
+    numPlaced_t.setFont(font);
+    numPlaced_t.setCharacterSize(16);
+    numPlaced_t.setFillColor(sf::Color::White);
+    numPlaced_t.setOutlineColor(sf::Color(0, 0, 0, 255));
+    numPlaced_t.setOutlineThickness(1);
+    numPlaced_t.setPosition(sf::Vector2f(10, 10));
 }
 
 void GameLoop::pollEvents()
@@ -23,21 +140,67 @@ void GameLoop::pollEvents()
     {
         if (event.type == sf::Event::Closed)
             window->close();
-        else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+        else if (won == true)
+            end();
+        else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && dog.returnDeath() == false && numPlaced != 0) {
             sf::RectangleShape rect{ { 20, 20 } };
             rect.setPosition(sf::Vector2f(sf::Mouse::getPosition(*window)));
             rect.setFillColor(sf::Color::Yellow);
             placed.push_back(rect);
+            numPlaced -= 1;
         }
     }
 }
 
 void GameLoop::update()
 {
+
+    const int level1[] = {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,1,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,1,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
+    const int level2[] =
+    {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,2,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,1,0,0,1,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
+
     //Update
     dog.update();
     if (placed.size() != 0)
         dog.moveTowards(placed);
+    
+    std::string numPlaced_s = "Places you have left: ";
+
+    numPlaced_t.setString(numPlaced_s.append(std::to_string(numPlaced)));
+
+    int tileUnderPlayer = level1[dog.tileX + dog.tileY * 13];
+
+    std::cout << tileUnderPlayer << std::endl;
+    
+    if (tileUnderPlayer == 1) {
+        won = true;
+    }
 
 }
 
@@ -49,11 +212,24 @@ void GameLoop::render()
     // Draw Background
     window->draw(BKG);
 
+    // Draw blocks
+    window->draw(*map);
+
+
     //Draw Sprites
     for (auto& e : placed) {
         window->draw(e);
     }
+
     dog.render(*window);
+
+    window->draw(numPlaced_t);
+
+    if (won == true)
+        window->draw(youWin_t);
+
+    if (dog.returnDeath() == true)
+        window->draw(gameOver_t);
 
     window->display();
 }
@@ -61,4 +237,63 @@ void GameLoop::render()
 bool GameLoop::running()
 {
     return window->isOpen();
+}
+
+void GameLoop::chooseLevel(int cLevel)
+{
+
+    // Init Levels
+
+    const int level1[] = {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,1,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
+    const int level2[] =
+    {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,2,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,1,0,0,1,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
+    switch (cLevel) {
+    case 1:
+        // Load tileset
+        if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level1, 13, 10))
+            std::cout << "FAILED TO LOAD TILESET" << std::endl;
+        numPlaced = 5;
+        break;
+    case 2:
+        // Load tileset
+        if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level2, 13, 10))
+            std::cout << "FAILED TO LOAD TILESET" << std::endl;
+        numPlaced = 10;
+        break;
+    }
+}
+
+void GameLoop::end()
+{
+    dog.reset();
+    cLevel += 1;
+    chooseLevel(cLevel);
+
+    won = false;
 }
