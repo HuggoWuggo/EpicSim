@@ -215,9 +215,9 @@ void GameLoop::update()
     if (placed.size() != 0)
         dog.moveTowards(placed);
     
-    std::string numPlaced_s = "Places you have left: ";
-
-    numPlaced_t.setString(numPlaced_s.append(std::to_string(numPlaced)));
+    std::string numPlaced_s = " PLACES LEFT";
+    
+    numPlaced_t.setString(std::to_string(numPlaced).append(numPlaced_s));
     int tileUnderPlayer;
 
     switch (cLevel) {
@@ -247,7 +247,10 @@ void GameLoop::update()
         }
         end();
     }
-    else if (dog.returnDeath() == true) {
+    else if (tileUnderPlayer == 2) {
+        dog.setDeath(true);
+    }
+    if (dog.returnDeath() == true) {
         while (dog.returnDeath() == true) {
             render();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
