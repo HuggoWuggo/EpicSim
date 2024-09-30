@@ -57,8 +57,8 @@ void Dog::update() {
     dogOut.setPosition(dogSpr.getPosition().x, dogSpr.getPosition().y);
     dogcol.setPosition(dogSpr.getPosition().x + 8, dogSpr.getPosition().y + 35);
 
-    this->tileX = std::round(dogSpr.getPosition().x / 64);
-    this->tileY = std::round(dogSpr.getPosition().y / 64);
+    this->tileX = std::ceil(dogSpr.getPosition().x / 64);
+    this->tileY = std::ceil(dogSpr.getPosition().y / 64);
 }
 
 void Dog::render(sf::RenderWindow& window)
@@ -71,6 +71,11 @@ void Dog::render(sf::RenderWindow& window)
 bool Dog::returnDeath() const
 {
     return dead;
+}
+
+void Dog::setDeath(bool val)
+{
+    dead = val;
 }
 
 void Dog::reset()

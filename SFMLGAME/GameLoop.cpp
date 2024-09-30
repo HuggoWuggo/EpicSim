@@ -78,11 +78,57 @@ void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 //window.draw(map);
 
 
+const int* GameLoop::getLevel(int num)
+{
+    // Init Levels
+
+    static int level1[] = {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,1,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+    static int level2[] =
+    {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,2,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,1,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
+    switch (num) {
+    case 1:
+        return level1;
+        break;
+    case 2:
+        return level2;
+        break;
+    default:
+        std::cout << "THAT WAS THE LAST LEVEL" << std::endl;
+        break;
+    }
+}
+
 GameLoop::GameLoop()
 {
     numPlaced = 0;
     cLevel = 1;
     won = false;
+    beat = false;
 
     // Init window and events
     this->window = new sf::RenderWindow(sf::VideoMode(832, 640), "It Works!", sf::Style::Titlebar | sf::Style::Close);
@@ -123,6 +169,14 @@ GameLoop::GameLoop()
     youWin_t.setOutlineThickness(4);
     youWin_t.setPosition(sf::Vector2f(230, 220));
     youWin_t.setString("YOU WIN!");
+    
+    completed_t.setFont(font);
+    completed_t.setCharacterSize(32);
+    completed_t.setFillColor(sf::Color(255, 255, 0, 255));
+    completed_t.setOutlineColor(sf::Color(255, 180, 0, 255));
+    completed_t.setOutlineThickness(4);
+    completed_t.setPosition(sf::Vector2f(230, 220));
+    completed_t.setString("YOU BEAT THE GAME!");
 
     numPlaced_t.setFont(font);
     numPlaced_t.setCharacterSize(16);
@@ -140,9 +194,7 @@ void GameLoop::pollEvents()
     {
         if (event.type == sf::Event::Closed)
             window->close();
-        else if (won == true)
-            end();
-        else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && dog.returnDeath() == false && numPlaced != 0) {
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && dog.returnDeath() == false && numPlaced != 0) {
             sf::RectangleShape rect{ { 20, 20 } };
             rect.setPosition(sf::Vector2f(sf::Mouse::getPosition(*window)));
             rect.setFillColor(sf::Color::Yellow);
@@ -155,35 +207,8 @@ void GameLoop::pollEvents()
 void GameLoop::update()
 {
 
-    const int level1[] = {
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,1,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,1,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0
-    };
-
-    const int level2[] =
-    {
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,2,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,1,0,0,1,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0
-    };
-
+    const int* level1 = getLevel(1);
+    const int* level2 = getLevel(2);
 
     //Update
     dog.update();
@@ -193,13 +218,52 @@ void GameLoop::update()
     std::string numPlaced_s = "Places you have left: ";
 
     numPlaced_t.setString(numPlaced_s.append(std::to_string(numPlaced)));
+    int tileUnderPlayer;
 
-    int tileUnderPlayer = level1[dog.tileX + dog.tileY * 13];
+    switch (cLevel) {
+    case 1:
+        tileUnderPlayer = level1[dog.tileX + dog.tileY * 13];
+        break;
+    case 2:
+        tileUnderPlayer = level2[dog.tileX + dog.tileY * 13];
+        break;
+    default:
+        tileUnderPlayer = 0;
+        break;
+    }
 
     std::cout << tileUnderPlayer << std::endl;
     
     if (tileUnderPlayer == 1) {
         won = true;
+        while (won == true) {
+            render();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        end();
+    }
+    else if (dog.returnDeath() == true) {
+        while (dog.returnDeath() == true) {
+            render();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        dog.setDeath(false);
+        dog.reset();
+        placed.clear();
+        if (cLevel == 1)
+            numPlaced = 5;
+        else if (cLevel == 2)
+            numPlaced = 10;
     }
 
 }
@@ -231,6 +295,11 @@ void GameLoop::render()
     if (dog.returnDeath() == true)
         window->draw(gameOver_t);
 
+    if (beat == true) {
+        window->clear(sf::Color::Black);
+        window->draw(completed_t);
+    }
+
     window->display();
 }
 
@@ -241,38 +310,8 @@ bool GameLoop::running()
 
 void GameLoop::chooseLevel(int cLevel)
 {
-
-    // Init Levels
-
-    const int level1[] = {
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,1,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0
-    };
-
-    const int level2[] =
-    {
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,2,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,1,0,0,1,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0
-    };
-
+    const int* level1 = getLevel(1);
+    const int* level2 = getLevel(2);
     switch (cLevel) {
     case 1:
         // Load tileset
@@ -286,6 +325,10 @@ void GameLoop::chooseLevel(int cLevel)
             std::cout << "FAILED TO LOAD TILESET" << std::endl;
         numPlaced = 10;
         break;
+
+    default:
+        beat = true;
+        break;
     }
 }
 
@@ -294,6 +337,8 @@ void GameLoop::end()
     dog.reset();
     cLevel += 1;
     chooseLevel(cLevel);
+
+    placed.clear();
 
     won = false;
 }

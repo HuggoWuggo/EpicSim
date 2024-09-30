@@ -28,5 +28,7 @@ public:
 
     bool returnDeath() const;
 
+    void setDeath(bool val);
+
     void reset();
 };

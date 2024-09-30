@@ -45,6 +45,7 @@ private:
 	sf::Text gameOver_t;
 	sf::Text youWin_t;
 	sf::Text numPlaced_t;
+	sf::Text completed_t;
 
 	// Number of placed
 	int numPlaced;
@@ -52,6 +53,11 @@ private:
 	int cLevel;
 
 	bool won;
+	bool beat;
+
+	int level2[130];
+
+	const int* getLevel(int num);
 
 public:
 
