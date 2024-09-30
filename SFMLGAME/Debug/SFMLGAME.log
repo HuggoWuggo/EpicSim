@@ -1,4 +1,2 @@
-﻿  Dog.cpp
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\Dog.cpp(60,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\Dog.cpp(61,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  LINK : C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\Debug\SFMLGAME.exe not found or not built by the last incremental link; performing full link
   SFMLGAME.vcxproj -> C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\Debug\SFMLGAME.exe

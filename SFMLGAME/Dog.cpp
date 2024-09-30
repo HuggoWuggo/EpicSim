@@ -81,5 +81,4 @@ void Dog::setDeath(bool val)
 void Dog::reset()
 {
     dogSpr.setPosition(0, 0);
-    std::cout << "TODO RESET" << std::endl;
 }

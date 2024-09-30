@@ -231,8 +231,6 @@ void GameLoop::update()
         tileUnderPlayer = 0;
         break;
     }
-
-    std::cout << tileUnderPlayer << std::endl;
     
     if (tileUnderPlayer == 1) {
         won = true;
