@@ -136,9 +136,6 @@ const int* GameLoop::getLevel(int num)
     case 3:
         return level3;
         break;
-    default:
-        std::cout << "THAT WAS THE LAST LEVEL" << std::endl;
-        break;
     }
 }
 
@@ -162,6 +159,8 @@ GameLoop::GameLoop()
     BKG.setScale(1.5, 1.5);
     BKG.setTextureRect(sf::IntRect(0, 0, 832, 640));
 
+    // Load ball Texture
+    ball_t.loadFromFile("Resources/Sprites/ball.png");
     map = new TileMap();
 
     chooseLevel(cLevel);
@@ -224,8 +223,16 @@ void GameLoop::pollEvents()
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && dog.returnDeath() == false && numPlaced != 0) {
             sf::RectangleShape rect{ { 20, 20 } };
             rect.setPosition(sf::Vector2f(sf::Mouse::getPosition(*window)));
-            rect.setFillColor(sf::Color::Yellow);
+            rect.setFillColor(sf::Color(0, 0, 0, 0));
             placed.push_back(rect);
+
+            sf::Sprite ball;
+            ball.setTexture(ball_t);
+            ball.setPosition(rect.getPosition());
+            ball.setScale(0.5, 0.5);
+
+            balls.push_back(ball);
+
             numPlaced -= 1;
         }
     }
@@ -291,6 +298,7 @@ void GameLoop::update()
         dog.setDeath(false);
         dog.reset();
         placed.clear();
+        balls.clear();
         if (cLevel == 1)
             numPlaced = 1;
         else if (cLevel == 2)
@@ -312,10 +320,15 @@ void GameLoop::render()
     // Draw blocks
     window->draw(*map);
 
-
     //Draw Sprites
     for (auto& e : placed) {
         window->draw(e);
+    }
+
+    if (balls.size() > 0) {
+        for (auto& e : balls) {
+            window->draw(e);
+        }
     }
 
     dog.render(*window);
@@ -377,6 +390,7 @@ void GameLoop::end()
     chooseLevel(cLevel);
 
     placed.clear();
+    balls.clear();
 
     won = false;
 }

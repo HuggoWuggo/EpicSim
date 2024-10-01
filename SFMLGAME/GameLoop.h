@@ -34,8 +34,14 @@ private:
 	// Create a Vector of placed
 	std::vector<sf::RectangleShape> placed;
 
+	// Create a Vector of balls
+	std::vector<sf::Sprite> balls;
+
 	// Init Background sprite
 	sf::Sprite BKG;
+
+	// Init ball texture
+	sf::Texture ball_t;
 
 	// Init grass texture
 	sf::Texture grass;

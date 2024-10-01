@@ -111,5 +111,5 @@ C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): w
 C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         [
 C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:             T=float
 C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         ]
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(143,1): warning C4715: 'GameLoop::getLevel': not all control paths return a value
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(140,1): warning C4715: 'GameLoop::getLevel': not all control paths return a value
   SFMLGAME.vcxproj -> C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\Debug\SFMLGAME.exe
