@@ -1,6 +1,5 @@
 #include "Dog.h"
 
-
 sf::Vector2f static Interpolate(const sf::Vector2<float>& pointA, const sf::Vector2<float>& pointB, float factor) {
     if (factor > 1.f)
         factor = 1.f;
@@ -12,13 +11,22 @@ sf::Vector2f static Interpolate(const sf::Vector2<float>& pointA, const sf::Vect
 }
 
 Dog::Dog() {
+    currentSprite = 6;
+    Moving = false;
+
+    // Init vars
+    dead = false;
+
+    // Load Image
+    spritesheet.loadFromFile("Resources/Sprites/walkR.png");
+
     // Init texture
-    dogTex.loadFromFile("Resources/Sprites/dog.png");
+    dogTex.loadFromImage(spritesheet, sf::IntRect(0, 0, 64, 64));
     dogTex.setRepeated(false);
 
     // Init Sprite
-    dogSpr.setPosition(0, 0);
-    dogSpr.setScale(3, 3);
+    dogSpr.setPosition(600, 10);
+    dogSpr.setScale(1.5, 1.5);
     dogSpr.setTexture(dogTex);
 
     // Init Outline
@@ -28,7 +36,7 @@ Dog::Dog() {
     dogOut.setOutlineThickness(2);
 
     // Init Collision
-    dogcol.setSize(sf::Vector2f(85, 24));
+    dogcol.setSize(sf::Vector2f(75, 20));
     dogcol.setFillColor(sf::Color(0, 0, 0, 0));
     dogcol.setOutlineColor(sf::Color::Blue);
     dogcol.setOutlineThickness(2);
@@ -36,10 +44,16 @@ Dog::Dog() {
 
 void Dog::moveTowards(std::vector<sf::RectangleShape> placed)
 {
+    Moving = true;
     sf::RectangleShape rect = (sf::RectangleShape)placed.back();
     sf::Vector2f pointB = rect.getPosition();
     
     if (!dogcol.getGlobalBounds().intersects(rect.getGlobalBounds())) {
+
+        if (pointB.x > dogSpr.getPosition().x)
+            spritesheet.loadFromFile("Resources/Sprites/walkR.png");
+        else if (pointB.x < dogSpr.getPosition().x)
+            spritesheet.loadFromFile("Resources/Sprites/walkL.png");
 
         // Move towards factor
         factor = speed;
@@ -54,18 +68,32 @@ void Dog::moveTowards(std::vector<sf::RectangleShape> placed)
 }
 
 void Dog::update() {
+    if (Moving) {
+        if (clock.getElapsedTime().asMilliseconds() > 50) {
+            if (currentSprite >= 5) {
+                currentSprite = 1;
+            }
+            else {
+                currentSprite += 1;
+            }
+            clock.restart();
+        }
+    }
+
     dogOut.setPosition(dogSpr.getPosition().x, dogSpr.getPosition().y);
-    dogcol.setPosition(dogSpr.getPosition().x + 8, dogSpr.getPosition().y + 35);
+    dogcol.setPosition(dogSpr.getPosition().x + 8, dogSpr.getPosition().y + 60);
 
     this->tileX = std::ceil(dogSpr.getPosition().x / 64);
     this->tileY = std::ceil(dogSpr.getPosition().y / 64);
+
 }
 
 void Dog::render(sf::RenderWindow& window)
 {
+    dogTex.loadFromImage(spritesheet, sf::IntRect(currentSprite * 64, 0, 64, 64));
     window.draw(dogSpr);
-    window.draw(dogOut);
-    window.draw(dogcol);
+    //window.draw(dogOut);
+    //window.draw(dogcol);
 }
 
 bool Dog::returnDeath() const
@@ -80,5 +108,7 @@ void Dog::setDeath(bool val)
 
 void Dog::reset()
 {
-    dogSpr.setPosition(0, 0);
+    dogSpr.setPosition(600, 10);
+    Moving = false;
+    currentSprite = 6;
 }

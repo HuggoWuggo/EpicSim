@@ -12,6 +12,13 @@ private:
     sf::RectangleShape dogOut;
     bool dead;
 
+    int currentSprite;
+    //Init image
+    sf::Image spritesheet;
+
+    sf::Clock clock;
+    bool Moving;
+
 public:
     sf::Sprite dogSpr;
     int tileX;

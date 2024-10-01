@@ -100,15 +100,31 @@ const int* GameLoop::getLevel(int num)
         0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,2,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,1,0,0,0,
+        0,0,0,0,1,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0
     };
+
+    static int level3[] =
+    {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,2,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,2,0,1,0,2,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
 
     switch (num) {
     case 1:
@@ -116,6 +132,9 @@ const int* GameLoop::getLevel(int num)
         break;
     case 2:
         return level2;
+        break;
+    case 3:
+        return level3;
         break;
     default:
         std::cout << "THAT WAS THE LAST LEVEL" << std::endl;
@@ -145,13 +164,14 @@ GameLoop::GameLoop()
 
     map = new TileMap();
 
-    // load level
-
     chooseLevel(cLevel);
 
     // Load font
     if (!font.loadFromFile("Resources/Fonts/BigBlueTerm.ttf"))
         std::cout << "FAILED TO LOAD FONT: BIGBLUETERM" << std::endl;
+
+    if (!s_font.loadFromFile("Resources/Fonts/GohuFont.ttf"))
+        std::cout << "FAILED TO LOAD FONT: GOHU" << std::endl;
 
     // Init text
     gameOver_t.setFont(font);
@@ -180,10 +200,17 @@ GameLoop::GameLoop()
 
     numPlaced_t.setFont(font);
     numPlaced_t.setCharacterSize(16);
-    numPlaced_t.setFillColor(sf::Color::White);
+    numPlaced_t.setFillColor(sf::Color(0, 255, 255, 255));
     numPlaced_t.setOutlineColor(sf::Color(0, 0, 0, 255));
-    numPlaced_t.setOutlineThickness(1);
-    numPlaced_t.setPosition(sf::Vector2f(10, 10));
+    numPlaced_t.setOutlineThickness(1.5);
+    numPlaced_t.setPosition(sf::Vector2f(10, 50));
+
+    cLevel_t.setFont(font);
+    cLevel_t.setCharacterSize(16);
+    cLevel_t.setFillColor(sf::Color(255, 0, 200, 255));
+    cLevel_t.setOutlineColor(sf::Color(0, 0, 139, 255));
+    cLevel_t.setOutlineThickness(1.5);
+    cLevel_t.setPosition(sf::Vector2f(10, 10));
 }
 
 void GameLoop::pollEvents()
@@ -207,17 +234,17 @@ void GameLoop::pollEvents()
 void GameLoop::update()
 {
 
-    const int* level1 = getLevel(1);
-    const int* level2 = getLevel(2);
-
     //Update
     dog.update();
     if (placed.size() != 0)
         dog.moveTowards(placed);
     
     std::string numPlaced_s = " PLACES LEFT";
-    
+    std::string cLevel_s = "LEVEL: ";
+
     numPlaced_t.setString(std::to_string(numPlaced).append(numPlaced_s));
+    cLevel_t.setString(cLevel_s.append(std::to_string(cLevel)));
+    
     int tileUnderPlayer;
 
     switch (cLevel) {
@@ -226,6 +253,9 @@ void GameLoop::update()
         break;
     case 2:
         tileUnderPlayer = level2[dog.tileX + dog.tileY * 13];
+        break;
+    case 3:
+        tileUnderPlayer = level3[dog.tileX + dog.tileY * 13];
         break;
     default:
         tileUnderPlayer = 0;
@@ -262,9 +292,11 @@ void GameLoop::update()
         dog.reset();
         placed.clear();
         if (cLevel == 1)
-            numPlaced = 5;
+            numPlaced = 1;
         else if (cLevel == 2)
-            numPlaced = 10;
+            numPlaced = 2;
+        else if (cLevel == 3)
+            numPlaced = 3;
     }
 
 }
@@ -289,6 +321,7 @@ void GameLoop::render()
     dog.render(*window);
 
     window->draw(numPlaced_t);
+    window->draw(cLevel_t);
 
     if (won == true)
         window->draw(youWin_t);
@@ -311,20 +344,24 @@ bool GameLoop::running()
 
 void GameLoop::chooseLevel(int cLevel)
 {
-    const int* level1 = getLevel(1);
-    const int* level2 = getLevel(2);
     switch (cLevel) {
     case 1:
         // Load tileset
         if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level1, 13, 10))
             std::cout << "FAILED TO LOAD TILESET" << std::endl;
-        numPlaced = 5;
+        numPlaced = 1;
         break;
     case 2:
         // Load tileset
         if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level2, 13, 10))
             std::cout << "FAILED TO LOAD TILESET" << std::endl;
-        numPlaced = 10;
+        numPlaced = 2;
+        break;
+    case 3:
+        // Load tileset
+        if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level3, 13, 10))
+            std::cout << "FAILED TO LOAD TILESET" << std::endl;
+        numPlaced = 3;
         break;
 
     default:

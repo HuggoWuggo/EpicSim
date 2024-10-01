@@ -42,10 +42,12 @@ private:
 
 	// Load font & text
 	sf::Font font;
+	sf::Font s_font;
 	sf::Text gameOver_t;
 	sf::Text youWin_t;
 	sf::Text numPlaced_t;
 	sf::Text completed_t;
+	sf::Text cLevel_t;
 
 	// Number of placed
 	int numPlaced;
@@ -55,9 +57,11 @@ private:
 	bool won;
 	bool beat;
 
-	int level2[130];
-
 	const int* getLevel(int num);
+
+	const int* level1 = getLevel(1);
+	const int* level2 = getLevel(2);
+	const int* level3 = getLevel(3);
 
 public:
 
