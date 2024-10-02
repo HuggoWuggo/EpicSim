@@ -11,6 +11,7 @@ sf::Vector2f static Interpolate(const sf::Vector2<float>& pointA, const sf::Vect
 }
 
 Dog::Dog() {
+    isRight = true;
     currentSprite = 6;
     Moving = false;
 
@@ -50,10 +51,14 @@ void Dog::moveTowards(std::vector<sf::RectangleShape> placed)
     
     if (!dogcol.getGlobalBounds().intersects(rect.getGlobalBounds())) {
 
-        if (pointB.x > dogSpr.getPosition().x)
+        if (pointB.x > dogSpr.getPosition().x) {
             spritesheet.loadFromFile("Resources/Sprites/walkR.png");
-        else if (pointB.x < dogSpr.getPosition().x)
+            isRight = true;
+        }
+        else if (pointB.x < dogSpr.getPosition().x) {
             spritesheet.loadFromFile("Resources/Sprites/walkL.png");
+            isRight = false;
+        }
 
         // Move towards factor
         factor = speed;
@@ -68,7 +73,7 @@ void Dog::moveTowards(std::vector<sf::RectangleShape> placed)
 }
 
 void Dog::update() {
-    if (Moving) {
+    if (Moving && dead == false) {
         if (clock.getElapsedTime().asMilliseconds() > 50) {
             if (currentSprite >= 5) {
                 currentSprite = 1;
@@ -83,9 +88,8 @@ void Dog::update() {
     dogOut.setPosition(dogSpr.getPosition().x, dogSpr.getPosition().y);
     dogcol.setPosition(dogSpr.getPosition().x + 8, dogSpr.getPosition().y + 60);
 
-    this->tileX = std::ceil(dogSpr.getPosition().x / 64);
-    this->tileY = std::ceil(dogSpr.getPosition().y / 64);
-
+    this->tileX = std::floor((dogSpr.getPosition().x + (96 / 2)) / 64);
+    this->tileY = std::floor((dogSpr.getPosition().y + (96/ 2))/ 64);
 }
 
 void Dog::render(sf::RenderWindow& window)
@@ -110,5 +114,15 @@ void Dog::reset()
 {
     dogSpr.setPosition(600, 10);
     Moving = false;
+    isRight = true;
+    spritesheet.loadFromFile("Resources/Sprites/walkR.png");
     currentSprite = 6;
+}
+
+void Dog::dead_anim()
+{
+    if (isRight == true)
+        spritesheet.loadFromFile("Resources/Sprites/deathL.png");
+    else
+        spritesheet.loadFromFile("Resources/Sprites/deathR.png");
 }

@@ -7,6 +7,7 @@
 
 class Dog {
 private:
+    sf::Texture walkingRightTexture;
     sf::Texture dogTex;
     sf::RectangleShape dogcol;
     sf::RectangleShape dogOut;
@@ -18,6 +19,7 @@ private:
 
     sf::Clock clock;
     bool Moving;
+    bool isRight;
 
 public:
     sf::Sprite dogSpr;
@@ -38,4 +40,8 @@ public:
     void setDeath(bool val);
 
     void reset();
+
+    void dead_anim();
+
+    void loadTextures();
 };

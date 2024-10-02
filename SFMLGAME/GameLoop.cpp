@@ -125,6 +125,21 @@ const int* GameLoop::getLevel(int num)
         0,0,0,0,0,0,0,0,0,0,0,0,0
     };
 
+    static int level4[] =
+    {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,2,0,2,0,2,0,2,0,2,0,2,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,2,0,2,0,2,0,2,0,2,0,2,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,1,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
 
     switch (num) {
     case 1:
@@ -136,6 +151,9 @@ const int* GameLoop::getLevel(int num)
     case 3:
         return level3;
         break;
+    case 4:
+        return level4;
+        break;
     }
 }
 
@@ -145,6 +163,7 @@ GameLoop::GameLoop()
     cLevel = 1;
     won = false;
     beat = false;
+    deathCounter = 0;
 
     // Init window and events
     this->window = new sf::RenderWindow(sf::VideoMode(832, 640), "It Works!", sf::Style::Titlebar | sf::Style::Close);
@@ -204,6 +223,13 @@ GameLoop::GameLoop()
     numPlaced_t.setOutlineThickness(1.5);
     numPlaced_t.setPosition(sf::Vector2f(10, 50));
 
+    deathCounter_t.setFont(font);
+    deathCounter_t.setCharacterSize(16);
+    deathCounter_t.setFillColor(sf::Color(255, 0, 0, 255));
+    deathCounter_t.setOutlineColor(sf::Color(128, 0, 0, 255));
+    deathCounter_t.setOutlineThickness(1.5);
+    deathCounter_t.setPosition(sf::Vector2f(10, 90));
+
     cLevel_t.setFont(font);
     cLevel_t.setCharacterSize(16);
     cLevel_t.setFillColor(sf::Color(255, 0, 200, 255));
@@ -248,9 +274,11 @@ void GameLoop::update()
     
     std::string numPlaced_s = " PLACES LEFT";
     std::string cLevel_s = "LEVEL: ";
+    std::string deathCounter_s = "DEATHS: ";
 
     numPlaced_t.setString(std::to_string(numPlaced).append(numPlaced_s));
     cLevel_t.setString(cLevel_s.append(std::to_string(cLevel)));
+    deathCounter_t.setString(deathCounter_s.append(std::to_string(deathCounter)));
     
     int tileUnderPlayer;
 
@@ -263,6 +291,9 @@ void GameLoop::update()
         break;
     case 3:
         tileUnderPlayer = level3[dog.tileX + dog.tileY * 13];
+        break;
+    case 4:
+        tileUnderPlayer = level4[dog.tileX + dog.tileY * 13];
         break;
     default:
         tileUnderPlayer = 0;
@@ -284,17 +315,18 @@ void GameLoop::update()
     }
     else if (tileUnderPlayer == 2) {
         dog.setDeath(true);
+        dog.dead_anim();  // Call death animation
     }
     if (dog.returnDeath() == true) {
         while (dog.returnDeath() == true) {
+            if (tileUnderPlayer == 2)
+                dog.dead_anim();  // Continue calling death animation in the death loop
             render();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
                 break;
             }
-            else {
-                continue;
-            }
         }
+        deathCounter += 1;
         dog.setDeath(false);
         dog.reset();
         placed.clear();
@@ -305,7 +337,10 @@ void GameLoop::update()
             numPlaced = 2;
         else if (cLevel == 3)
             numPlaced = 3;
+        else if (cLevel == 4)
+            numPlaced = 3;
     }
+
 
 }
 
@@ -335,6 +370,7 @@ void GameLoop::render()
 
     window->draw(numPlaced_t);
     window->draw(cLevel_t);
+    window->draw(deathCounter_t);
 
     if (won == true)
         window->draw(youWin_t);
@@ -373,6 +409,12 @@ void GameLoop::chooseLevel(int cLevel)
     case 3:
         // Load tileset
         if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level3, 13, 10))
+            std::cout << "FAILED TO LOAD TILESET" << std::endl;
+        numPlaced = 3;
+        break;
+    case 4:
+        // Load tileset
+        if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level4, 13, 10))
             std::cout << "FAILED TO LOAD TILESET" << std::endl;
         numPlaced = 3;
         break;

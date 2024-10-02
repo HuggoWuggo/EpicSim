@@ -54,11 +54,13 @@ private:
 	sf::Text numPlaced_t;
 	sf::Text completed_t;
 	sf::Text cLevel_t;
+	sf::Text deathCounter_t;
 
 	// Number of placed
 	int numPlaced;
 
 	int cLevel;
+	int deathCounter;
 
 	bool won;
 	bool beat;
@@ -68,6 +70,7 @@ private:
 	const int* level1 = getLevel(1);
 	const int* level2 = getLevel(2);
 	const int* level3 = getLevel(3);
+	const int* level4 = getLevel(4);
 
 public:
 
