@@ -18,10 +18,11 @@ private:
     sf::Image spritesheet;
 
     sf::Clock clock;
-    bool Moving;
     bool isRight;
 
 public:
+
+    bool Moving;
     sf::Sprite dogSpr;
     int tileX;
     int tileY;
@@ -42,6 +43,4 @@ public:
     void reset();
 
     void dead_anim();
-
-    void loadTextures();
 };

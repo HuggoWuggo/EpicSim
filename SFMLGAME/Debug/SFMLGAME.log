@@ -1,4 +1,117 @@
-﻿  Dog.cpp
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\Dog.cpp(91,29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\Dog.cpp(92,29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  GameLoop.cpp
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,63): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,63): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,63): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,63): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,63): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,47): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,47): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,47): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,47): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(29,47): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,69): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,69): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,69): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,69): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,69): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,53): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,53): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,53): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,53): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(30,53): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,75): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,75): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,75): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,75): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,75): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,53): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,53): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,53): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,53): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(31,53): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,69): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,69): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,69): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,69): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,69): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,47): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,47): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,47): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,47): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(32,47): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,66): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(35,49): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,72): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(36,55): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,78): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(37,55): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,72): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         with
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:             T=unsigned int
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         and
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         [
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:             T=float
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(38,49): warning C4244:         ]
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(395,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(395,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\SFMLGAME\GameLoop.cpp(192,1): warning C4715: 'GameLoop::getLevel': not all control paths return a value
   SFMLGAME.vcxproj -> C:\Users\hugol\OneDrive\Documents\GitHub\EpicSim\Debug\SFMLGAME.exe

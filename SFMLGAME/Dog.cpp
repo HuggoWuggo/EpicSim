@@ -19,7 +19,7 @@ Dog::Dog() {
     dead = false;
 
     // Load Image
-    spritesheet.loadFromFile("Resources/Sprites/walkR.png");
+    spritesheet.loadFromFile("Resources/Sprites/walkL.png");
 
     // Init texture
     dogTex.loadFromImage(spritesheet, sf::IntRect(0, 0, 64, 64));
@@ -83,6 +83,10 @@ void Dog::update() {
             }
             clock.restart();
         }
+    }
+
+    if (Moving == false) {
+        currentSprite = 6;
     }
 
     dogOut.setPosition(dogSpr.getPosition().x, dogSpr.getPosition().y);

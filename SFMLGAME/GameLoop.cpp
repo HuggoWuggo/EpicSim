@@ -82,6 +82,20 @@ const int* GameLoop::getLevel(int num)
 {
     // Init Levels
 
+    static int level0[] = {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
     static int level1[] = {
         0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -140,8 +154,26 @@ const int* GameLoop::getLevel(int num)
         0,0,0,0,0,0,0,0,0,0,0,0,0
     };
 
+    static int level5[] =
+    {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,
+        2,2,2,2,2,0,0,0,0,0,0,0,0,
+        2,0,0,1,2,0,0,0,0,0,0,0,0,
+        2,0,0,0,2,0,0,0,0,0,0,3,0,
+        2,0,4,0,2,0,0,0,0,0,0,0,0,
+        2,2,2,2,2,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
 
     switch (num) {
+    case 0:
+        return level0;
+        break;
     case 1:
         return level1;
         break;
@@ -153,6 +185,8 @@ const int* GameLoop::getLevel(int num)
         break;
     case 4:
         return level4;
+    case 5:
+        return level5;
         break;
     }
 }
@@ -160,7 +194,7 @@ const int* GameLoop::getLevel(int num)
 GameLoop::GameLoop()
 {
     numPlaced = 0;
-    cLevel = 1;
+    cLevel = 0;
     won = false;
     beat = false;
     deathCounter = 0;
@@ -236,6 +270,24 @@ GameLoop::GameLoop()
     cLevel_t.setOutlineColor(sf::Color(0, 0, 139, 255));
     cLevel_t.setOutlineThickness(1.5);
     cLevel_t.setPosition(sf::Vector2f(10, 10));
+
+    title_t.setFont(font);
+    title_t.setCharacterSize(32);
+    title_t.setFillColor(sf::Color(180, 0, 0, 255));
+    title_t.setOutlineColor(sf::Color(255, 255, 0, 255));
+    title_t.setOutlineThickness(1.5);
+    title_t.setPosition(sf::Vector2f(230, 220));
+    title_t.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
+    title_t.setString("CHINESE SIMULATOR");
+
+    name_t.setFont(font);
+    name_t.setCharacterSize(16);
+    name_t.setFillColor(sf::Color(0, 0, 0, 255));
+    name_t.setOutlineColor(sf::Color(255, 255, 255, 255));
+    name_t.setOutlineThickness(1);
+    name_t.setPosition(sf::Vector2f(280, 280));
+    name_t.setStyle(sf::Text::Style::Italic | sf::Text::Style::Underlined);
+    name_t.setString("By The Oguhs Cookies Team");
 }
 
 void GameLoop::pollEvents()
@@ -246,7 +298,7 @@ void GameLoop::pollEvents()
     {
         if (event.type == sf::Event::Closed)
             window->close();
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && dog.returnDeath() == false && numPlaced != 0) {
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && dog.returnDeath() == false && numPlaced != 0 && cLevel != 0) {
             sf::RectangleShape rect{ { 20, 20 } };
             rect.setPosition(sf::Vector2f(sf::Mouse::getPosition(*window)));
             rect.setFillColor(sf::Color(0, 0, 0, 0));
@@ -266,6 +318,13 @@ void GameLoop::pollEvents()
 
 void GameLoop::update()
 {
+    if (cLevel == 0) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+            won = true;
+            end();
+        }
+    }
+    int xp, yp;
 
     //Update
     dog.update();
@@ -283,6 +342,9 @@ void GameLoop::update()
     int tileUnderPlayer;
 
     switch (cLevel) {
+    case 0:
+        tileUnderPlayer = level0[dog.tileX + dog.tileY * 13];
+        break;
     case 1:
         tileUnderPlayer = level1[dog.tileX + dog.tileY * 13];
         break;
@@ -294,6 +356,9 @@ void GameLoop::update()
         break;
     case 4:
         tileUnderPlayer = level4[dog.tileX + dog.tileY * 13];
+        break;
+    case 5:
+        tileUnderPlayer = level5[dog.tileX + dog.tileY * 13];
         break;
     default:
         tileUnderPlayer = 0;
@@ -317,6 +382,22 @@ void GameLoop::update()
         dog.setDeath(true);
         dog.dead_anim();  // Call death animation
     }
+    else if (tileUnderPlayer == 3) {
+        for (int i = 0; i < 13 * 11; ++i) { // Loop through all tiles (13 columns by 11 rows)
+            if (level5[i] == 4) {
+                int x = (i % 13) * 64; // Column index (x)
+                int y = (i / 13) * 64; // Row index (y)
+
+                xp = x;
+                yp = y - 60;
+            }
+        }
+        dog.dogSpr.setPosition(xp, yp);
+        placed.clear();
+        dog.Moving = false;
+    }
+
+
     if (dog.returnDeath() == true) {
         while (dog.returnDeath() == true) {
             if (tileUnderPlayer == 2)
@@ -331,7 +412,9 @@ void GameLoop::update()
         dog.reset();
         placed.clear();
         balls.clear();
-        if (cLevel == 1)
+        if (cLevel == 0)
+            numPlaced = 1;
+        else if (cLevel == 1)
             numPlaced = 1;
         else if (cLevel == 2)
             numPlaced = 2;
@@ -339,6 +422,8 @@ void GameLoop::update()
             numPlaced = 3;
         else if (cLevel == 4)
             numPlaced = 3;
+        else if (cLevel == 5)
+            numPlaced = 2;
     }
 
 
@@ -357,20 +442,28 @@ void GameLoop::render()
 
     //Draw Sprites
     for (auto& e : placed) {
-        window->draw(e);
+        if (cLevel != 0)
+            window->draw(e);
     }
 
-    if (balls.size() > 0) {
+    if (balls.size() > 0 && cLevel != 0) {
         for (auto& e : balls) {
             window->draw(e);
         }
     }
 
-    dog.render(*window);
+    if (cLevel != 0)
+        dog.render(*window);
 
-    window->draw(numPlaced_t);
-    window->draw(cLevel_t);
-    window->draw(deathCounter_t);
+    if (cLevel != 0){
+        window->draw(numPlaced_t);
+        window->draw(cLevel_t);
+        window->draw(deathCounter_t);
+    }
+    else {
+        window->draw(title_t);
+        window->draw(name_t);
+    }
 
     if (won == true)
         window->draw(youWin_t);
@@ -394,6 +487,12 @@ bool GameLoop::running()
 void GameLoop::chooseLevel(int cLevel)
 {
     switch (cLevel) {
+    case 0:
+        // Load tileset
+        if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level0, 13, 10))
+            std::cout << "FAILED TO LOAD TILESET" << std::endl;
+        numPlaced = 1;
+        break;
     case 1:
         // Load tileset
         if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level1, 13, 10))
@@ -417,6 +516,12 @@ void GameLoop::chooseLevel(int cLevel)
         if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level4, 13, 10))
             std::cout << "FAILED TO LOAD TILESET" << std::endl;
         numPlaced = 3;
+        break;
+    case 5:
+        // Load tileset
+        if (!map->load("Resources/Textures/tileset.png", sf::Vector2u(64, 64), level5, 13, 10))
+            std::cout << "FAILED TO LOAD TILESET" << std::endl;
+        numPlaced = 2;
         break;
 
     default:
