@@ -1,6 +1,7 @@
 THIS THE ONE, THE ONLY, CHIN___ SIMULATOR!
 
 **TO PLAY!**
+
 IF YOU JUST WANT TO PLAY, GOTO THE ITCH.IO PAGE https://oguhs-cookies.itch.io/
 
 *IF YOU CAN"T BE ASKED*
