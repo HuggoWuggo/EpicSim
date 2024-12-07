@@ -45,6 +45,7 @@ Dog::Dog() {
 
 void Dog::moveTowards(std::vector<sf::RectangleShape> placed)
 {
+
     Moving = true;
     sf::RectangleShape rect = (sf::RectangleShape)placed.back();
     sf::Vector2f pointB = rect.getPosition();
